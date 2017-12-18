@@ -12,8 +12,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(path = "api/")
 public class MyController {
 
-    @Autowired
     private TextService textService;
+
+    public MyController(@Autowired TextService textService) {
+        this.textService = textService;
+    }
 
     @RequestMapping(path = "status", method = RequestMethod.GET)
     public ResponseEntity<String> status() {
