@@ -1,4 +1,4 @@
-package nl.stenden.zes;
+package com.casheep;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
