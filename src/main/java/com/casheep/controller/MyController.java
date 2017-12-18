@@ -6,6 +6,7 @@ import com.casheep.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
+import org.springframework.jms.core.JmsTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,10 +17,12 @@ public class MyController {
 
     private TextService textService;
     private UserService userService;
+    private JmsTemplate template;
 
-    public MyController(@Autowired TextService textService, @Qualifier("userServiceImpl") @Autowired UserService userService) {
+    public MyController(@Autowired TextService textService, @Qualifier("userServiceImpl") @Autowired UserService userService, JmsTemplate template) {
         this.textService = textService;
         this.userService = userService;
+        this.template = template;
     }
 
     @RequestMapping(path = "status", method = RequestMethod.GET)
@@ -40,7 +43,9 @@ public class MyController {
 
     @RequestMapping(path = "users/{name}", method = RequestMethod.GET)
     public ResponseEntity<List<User>> getUserByName(@PathVariable String name) {
-        return ResponseEntity.ok(userService.getUserByName(name));
+        List<User> users = userService.getUserByName(name);
+        users.forEach(user -> template.convertAndSend("casheep1", user.getEmail()));
+        return ResponseEntity.ok(users);
     }
 
 }
