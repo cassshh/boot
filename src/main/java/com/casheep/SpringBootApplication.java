@@ -1,6 +1,5 @@
 package com.casheep;
 
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
@@ -11,11 +10,11 @@ import static java.lang.System.exit;
 @Configuration
 @EnableAutoConfiguration
 @ComponentScan
-public class OurSpringBootApplication implements CommandLineRunner {
+public class SpringBootApplication {
 
 
     public static void main(String... args) {
-        SpringApplication.run(OurSpringBootApplication.class, args);
+        SpringApplication.run(SpringBootApplication.class, args);
     }
 
 
